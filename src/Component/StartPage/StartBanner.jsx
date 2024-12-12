@@ -2,7 +2,9 @@
 const StartBanner = () => {
     return (
         <>
-            
+            <div>
+                
+            </div>
         </>
     )
 }

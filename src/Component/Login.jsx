@@ -20,7 +20,7 @@ const Login = () => {
                     if (userData.isRole) {
                         console.log('dashboard');
                         alert('Admin successfully logged In');
-                        navigate('/dashboard');
+                        navigate('/admin');
                     }
                     else {
                         console.log('home');
@@ -79,7 +79,7 @@ const Login = () => {
 
                             <form onSubmit={HandleRegister} className="mt-8 space-y-4">
                                 <div>
-                                    <label htmlFor="email" className="sr-only">Email</label>
+                                    <label className="sr-only">Email</label>
                                     <div className="relative">
                                         <input
                                             ref={email}
@@ -91,7 +91,7 @@ const Login = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="password" className="sr-only">Password</label>
+                                    <label className="sr-only">Password</label>
                                     <div className="relative">
                                         <input
                                             ref={password}

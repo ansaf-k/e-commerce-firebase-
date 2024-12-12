@@ -3,8 +3,11 @@ import HomePage from "./Component/HomePage/HomePage"
 import Login from "./Component/Login"
 import { Route, Routes } from "react-router-dom"
 import SignUp from "./Component/SignUp"
-import DashboardPage from "./Component/DashboardPage/DashboardPage"
 import StartPage from "./Component/StartPage/StartPage"
+import AdminPage from "./Component/AdminPage/AdminPage"
+import UserProfile from "./Component/UserPage/UserProfile"
+import Cart from "./Component/CartPage.jsx/Cart"
+import OrderPage from "./Component/UserPage/OrderPage"
 
 const App = () => {
   return (
@@ -14,7 +17,10 @@ const App = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/user" element={<UserProfile />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/orders" element={<OrderPage />} />
       </Routes>
       <Footer />
     </>
