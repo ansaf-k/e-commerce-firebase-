@@ -1,4 +1,4 @@
-import { Bell, LogOut, Package, ShoppingCart, Truck, Users } from 'lucide-react';
+import { Bell, LogOut, Package, ShoppingCart, Users } from 'lucide-react';
 import PropTypes from 'prop-types';
 import '../../style/AdminDashboard.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,10 +6,9 @@ import { useEffect, useState } from 'react';
 import OrderSection from './OrderSection';
 import ProductsSection from './ProductsSection';
 import CustomerSection from './CustomerSection';
-import ShippingSection from './ShippingSection';
-import { getAuth, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../Firebase/FirebaseConfig';
+import { auth, db } from '../../Firebase/FirebaseConfig';
 
 const StatCard = ({ title, value, change }) => (
     <div className="bg-gray-900 rounded-lg p-6">
@@ -48,13 +47,10 @@ const OrderRow = ({ id, status, customer, amount }) => (
     </tr>
 );
 const AdminPage = () => {
+
     const [activeSection, setActiveSection] = useState('orders');
     const [productDetail, setProductDetail] = useState();
     const navigate = useNavigate();
-
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const uid = user?.uid;
 
     const LogOutHandler = () => {
         signOut(auth).then(() => {
@@ -63,15 +59,15 @@ const AdminPage = () => {
         });
     }
 
-    const getUserDataById = async () => {
+    const getUserDataById = async (id) => {
         try {
-            // Reference the user's document in the 'users' collection
-            const docRef = doc(db, 'users', uid);
+            const docRef = doc(db, 'users', id);
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
                 console.log('User Data:', docSnap.data());
                 setProductDetail(docSnap.data()); // Returns the user data
+                console.log(docSnap.data());
             } else {
                 console.log('No such user document!');
                 return null;
@@ -90,8 +86,6 @@ const AdminPage = () => {
                 return <ProductsSection />;
             case 'customers':
                 return <CustomerSection />;
-            case 'shipping':
-                return <ShippingSection />;
             default:
                 return <OrderSection />;
         }
@@ -99,8 +93,13 @@ const AdminPage = () => {
 
     useEffect(() => {
         getUserDataById();
-    },[]);
+    }, []);
 
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            getUserDataById(user.uid);
+        })
+    },);
     return (
         <>
             <div className="flex h-screen bg-black text-white font-sans">
@@ -114,7 +113,6 @@ const AdminPage = () => {
                         <NavItem icon={ShoppingCart} label="Orders" onClick={() => setActiveSection('orders')} active={activeSection === 'orders'} />
                         <NavItem icon={Package} label="Products" onClick={() => setActiveSection('products')} active={activeSection === 'products'} />
                         <NavItem icon={Users} label="Customers" onClick={() => setActiveSection('customers')} active={activeSection === 'customers'} />
-                        <NavItem icon={Truck} label="Shipping" onClick={() => setActiveSection('shipping')} active={activeSection === 'shipping'} />
                     </nav>
                 </aside>
 
@@ -128,7 +126,7 @@ const AdminPage = () => {
                                 <Bell size={20} />
                             </button>
                             <div className="flex items-center cursor-pointer bg-slate-700 p-2 rounded-3xl">
-                                    <p>{productDetail?.name}</p>
+                                <p>{productDetail?.name}</p>
                             </div>
                             <button onClick={LogOutHandler} className="p-2 text-gray-400 hover:text-white">
                                 <LogOut size={20} />

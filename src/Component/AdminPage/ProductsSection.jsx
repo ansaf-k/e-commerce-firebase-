@@ -105,7 +105,7 @@ const ProductsSection = () => {
         <table className="w-full">
           <thead>
             <tr className="text-left text-gray-400 text-sm uppercase">
-              <th className="py-3 px-4">Product ID</th>
+              <th className="py-3 px-4">Product Image</th>
               <th className="py-3 px-4">Name</th>
               <th className="py-3 px-4">Category</th>
               <th className="py-3 px-4">Price</th>
@@ -114,7 +114,7 @@ const ProductsSection = () => {
           <tbody>
             {allProduct.map((item, index) => (
               <tr key={index} className="border-t border-gray-800">
-                <td className="py-4 px-4"><img src={item.image} alt="alt" /></td>
+                <td className="py-4 px-4 w-1 h-1"><img src={item.img} alt="alt" /></td>
                 <td className="py-4 px-4">{item.name}</td>
                 <td className="py-4 px-4">{item.category}</td>
                 <td className="py-4 px-4">{item.price}</td>

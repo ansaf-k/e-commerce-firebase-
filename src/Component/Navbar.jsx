@@ -1,6 +1,8 @@
-import { User, Search, ShoppingBag } from 'lucide-react';
+import { signOut } from 'firebase/auth';
+import { User, Search, ShoppingBag, LogOut } from 'lucide-react';
 import PropTypes from 'prop-types'
 import { useLocation, useNavigate } from 'react-router-dom';
+import { auth } from '../Firebase/FirebaseConfig';
 
 function NavLink({ href, children }) {
     return (
@@ -17,19 +19,30 @@ function Navbar() {
     const location = useLocation();
 
     const HandleButtonCart = () => {
-        if (location.pathname === '/home') {
-            navigate('/cart');
-        } else {
+        if (location.pathname === '/') {
             navigate('/login');
+        } else {
+            navigate('/cart');
         }
     }
 
+    const LogoutHandler = () => {
+        signOut(auth)
+            .then(() => {
+                console.log('User signed out.');
+                navigate('/login');
+            })
+            .catch((error) => {
+                alert('Error signing out:', error);
+                navigate('/login');
+            });
+    };
+
     const HandleButtonClick = () => {
-        if (location.pathname === '/home') {
-            console.log('user');
-            navigate('/user');
-        } else {
+        if (location.pathname === '/') {
             navigate('/login');
+        } else {
+            navigate('/home');
         }
     };
 
@@ -61,6 +74,9 @@ function Navbar() {
                                 </button>
                                 <button onClick={HandleButtonCart} className="hover:text-gray-300 transition-colors">
                                     <ShoppingBag className="w-5 h-5" />
+                                </button>
+                                <button onClick={LogoutHandler} className="hover:text-gray-300 transition-colors">
+                                    <LogOut className="w-5 h-5" />
                                 </button>
                             </div>
                         </div>

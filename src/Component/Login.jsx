@@ -25,7 +25,7 @@ const Login = () => {
                     else {
                         console.log('home');
                         alert('User successfully logged In');
-                        navigate('/home');
+                        navigate('/user');
                     }
 
                 }else {

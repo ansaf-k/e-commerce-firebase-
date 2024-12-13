@@ -1,40 +1,33 @@
-import { getAuth } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import Navbar from "../Navbar"
 import { useEffect, useState } from "react";
 import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../Firebase/FirebaseConfig";
+import { auth, db } from "../../Firebase/FirebaseConfig";
 import { X } from "lucide-react";
 
 const Cart = () => {
 
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const uid = user?.uid;
-  const email = user?.email;
   const [allCart, setAllCart] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const [currentUser, setCurrentUser] = useState();
+  const [email, setEmail] = useState();
 
   const getCurrentTime = () => {
-    const now = new Date();
-
     // Extract time components
-    const hours = now.getHours(); // Hours (0–23)
-    const minutes = now.getMinutes(); // Minutes (0–59)
-    const seconds = now.getSeconds(); // Seconds (0–59)
+    const today = new Date();
+    const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+    console.log(formattedDate);
 
-    // Format the time as HH:MM:SS
-    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes
-      .toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-    return formattedTime;
+    return formattedDate;
   };
 
   console.log('Current Time:', getCurrentTime());
 
   const getCarts = async () => {
-    if (uid) {
-      const cartRef = collection(db, "users", uid, "cart");
+    if (currentUser) {
+      const cartRef = collection(db, "users", currentUser, "cart");
       const snapshot = await getDocs(cartRef);
       const cartData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setAllCart(cartData);
@@ -46,8 +39,8 @@ const Cart = () => {
   }
 
   const handleRemoveCartItem = async (itemId) => {
-    if (uid) {
-      const cartRef = doc(db, "users", uid, "cart", itemId);
+    if (currentUser) {
+      const cartRef = doc(db, "users", currentUser, "cart", itemId);
       await deleteDoc(cartRef);
       alert("Item removed from cart");
       getCarts();
@@ -57,8 +50,8 @@ const Cart = () => {
   }
 
   const HandleOrder = async () => {
-    if (uid) {
-      const cartRef = collection(db, "users",uid, "orders");
+    if (currentUser) {
+      const cartRef = collection(db, "users", currentUser, "orders");
       const buyerRef = collection(db, "buyer",);
 
       allCart.forEach(async (item) => {
@@ -69,7 +62,9 @@ const Cart = () => {
           img: item.img,
           quantity: item.quantity,
           time: getCurrentTime(),
-          email: email
+          email: email,
+          buyerId: currentUser,
+          status: 'pending'
         };
 
         await setDoc(doc(cartRef, item.id), orderDetails);
@@ -79,7 +74,7 @@ const Cart = () => {
       alert("Order placed successfully");
       // Clear the cart after the order is placed
       allCart.forEach(async (product) => {
-        const cartItemRef = doc(db, "users", uid, "cart", product.id);
+        const cartItemRef = doc(db, "users", currentUser, "cart", product.id);
         await deleteDoc(cartItemRef);
       });
 
@@ -99,8 +94,8 @@ const Cart = () => {
   }
 
   const HandleQuantity = async (itemId, value) => {
-    if (uid) {
-      const cartRef = doc(db, "users", uid, "cart", itemId);
+    if (currentUser) {
+      const cartRef = doc(db, "users", currentUser, "cart", itemId);
       const cartItem = allCart.find((item) => item.id === itemId);
 
       if (value === "increment") {
@@ -114,6 +109,13 @@ const Cart = () => {
       alert("Please login to update quantities");
     }
   }
+
+  useEffect(()=> {
+    onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user.uid);
+      setEmail(user.email);
+    })
+  },);
 
   useEffect(() => {
     getCarts();
