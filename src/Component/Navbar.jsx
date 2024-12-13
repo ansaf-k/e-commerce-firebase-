@@ -48,11 +48,11 @@ function Navbar() {
 
     return (
         <>
-            <div className="fixed bg-black backdrop-filter backdrop-blur-sm bg-opacity-75 w-full z-50">
+            <div className="fixed backdrop-filter backdrop-blur-sm w-full z-50">
 
                 <nav className="bg-opacity-0 text-white">
                     <div className="container mx-auto px-4">
-                        <div className="h-16 flex p-3 items-center justify-between">
+                        <div className="h-20 flex p-3 items-center justify-between">
 
                             <a href="/" className="text-4xl font-bold tracking-wider">
                                 LUSTRE

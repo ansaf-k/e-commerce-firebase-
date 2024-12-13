@@ -1,18 +1,24 @@
-.glow {
-  font-size: 80px;
-  color: #fff;
-  text-align: center;
-  animation: glow 1s ease-in-out infinite alternate;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Webfont: Humane-Regular */
+@font-face {
+  font-family: 'MangoGrotesque';
+  src: url('./src/Font/Humane-Regular.eot');
+  /* IE9 Compat Modes */
+  src: url('./src/Font/Humane-Regular.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('./src/Font/Humane-Regular.woff') format('woff'),
+    /* Modern Browsers */
+    url('./src/Font/Humane-Regular.woff2') format('woff2'),
+    /* Modern Browsers */
+    url('./src/Font/Humane-Regular.ttf') format('truetype');
+  /* Safari, Android, iOS */
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
 }
 
-@-webkit-keyframes glow {
-  from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073,
-      0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-  }
-
-  to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6,
-      0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-  }
+.row-1 {
+  background-image: url('./src/assets/banner.jpg');
+  font-family: "Poppins", serif;
 }
