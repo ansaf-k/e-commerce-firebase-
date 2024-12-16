@@ -33,8 +33,6 @@ const Cart = () => {
       setAllCart(cartData);
       console.log(allCart);
       calculateSubtotal(cartData);
-    } else {
-      alert("Please login to view your cart");
     }
   }
 
@@ -79,8 +77,6 @@ const Cart = () => {
       });
 
       getCarts();
-    } else {
-      alert("Please login to place an order");
     }
   }
 

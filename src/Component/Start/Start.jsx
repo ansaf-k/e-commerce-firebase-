@@ -1,5 +1,4 @@
 import Banner from "../Banner"
-import Footer from "../Footer"
 import Navbar from "../Navbar"
 import "../../style/Start.css"
 
@@ -9,28 +8,27 @@ const Start = () => {
       <Navbar />
       <Banner />
       {/* Start Page Content */}
-      <div className="glow bg-black container">
-        {/* <div className="h-[50vh]">
-          <h1 className="text-orange-50 flex items-center justify-center text-[50vh] leading-none">LUSTRE &nbsp;&nbsp;-&nbsp;&nbsp; THE FASHION </h1>
-        </div> */}
-       <div className="mx-20 pt-10">
-          <div className="inline-flex">
-           <div className="flex">
-              <div className="bg-cover w-[50vh] h-[50vh] row-1">
-              </div>
-                <p className="flex pl-2 items-end text-white uppercase text-xs">zara<br/>jacket</p>
-           </div>
-           <div className="flex">
-              <div className="bg-cover w-[50vh] h-[50vh] row-1">
-              </div>
-                <p className="flex pl-2 items-end text-white uppercase text-xs">zara<br/>jacket</p>
-           </div>
-            <div>
+      <div className="glow w-full bg-black container">
+        <div className="mx-5 pt-5">
+          <div className="flex justify-between w-full">
+            <div className="flex row-1 flex-col justify-end bg-cover w-[50vh] h-[50vh] relative">
+            </div>
+            <div className="flex row-2 flex-col justify-end bg-cover w-[70vh] h-[70vh] relative">
             </div>
           </div>
-       </div>
+        </div>
+        <div>
+          <div className="w-full pt-40 px-52">
+            <img className="w-full h-[30vh] object-cover object-top transition-all duration-300 hover:object-center" src="./src/assets/banner.jpg" alt="" />
+          </div>
+          <div className="w-full px-52">
+            <img className="w-full h-[30vh] object-cover object-bottom transition-all duration-300 hover:object-center" src="./src/assets/banner4.jpg" alt="" />
+          </div>
+          <div className="w-full px-52">
+            <img className="w-full h-[30vh] object-cover object-center transition-all duration-300 hover:object-bottom" src="./src/assets/banner2.jpg" alt="" />
+          </div>
+        </div>
       </div>
-      <Footer />
     </>
   )
 }

@@ -54,7 +54,7 @@ function Navbar() {
                     <div className="container mx-auto px-4">
                         <div className="h-20 flex p-3 items-center justify-between">
 
-                            <a href="/" className="text-4xl font-bold tracking-wider">
+                            <a href="/home" className="text-4xl font-bold tracking-wider">
                                 LUSTRE
                             </a>
 
