@@ -10,7 +10,9 @@ import OrderPage from "./Component/UserPage/OrderPage"
 import ProtectedRoute from "./utilis/ProtectedRoute"
 import Start from "./Component/Start/Start"
 
+
 const App = () => {
+
   return (
     <>
       <Routes>
@@ -22,13 +24,13 @@ const App = () => {
           <ProtectedRoute>
             <HomePage />
           </ProtectedRoute>
-          } />
+        } />
 
         <Route path="/admin" element={
-            <ProtectedRoute>
-              <AdminPage />
-            </ProtectedRoute>
-          } />
+          <ProtectedRoute>
+            <AdminPage />
+          </ProtectedRoute>
+        } />
 
         <Route path="/user" element={
           <ProtectedRoute>
@@ -47,7 +49,7 @@ const App = () => {
             <OrderPage />
           </ProtectedRoute>
         } />
-        
+
       </Routes>
       <Footer />
     </>
