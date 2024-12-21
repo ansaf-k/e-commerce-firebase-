@@ -99,7 +99,7 @@ const AdminPage = () => {
         onAuthStateChanged(auth, (user) => {
             getUserDataById(user.uid);
         })
-    },);
+    },[]);
     return (
         <>
             <div className="flex h-screen bg-black text-white font-sans">
