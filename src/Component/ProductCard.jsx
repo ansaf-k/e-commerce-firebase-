@@ -58,9 +58,9 @@ const ProductCard = React.forwardRef((props, ref) => {
     return (
         <div ref={ref} className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {allProduct.map((item, index) => (
-                <Link to={`/product/${item.id}`} key={index} className="group my-10 flex w-full max-w-xs flex-col overflow-hidden border border-gray-100 bg-white shadow-md">
+                <Link key={index} className="group my-10 flex w-full max-w-xs flex-col overflow-hidden border border-gray-700 bg-gray-100 shadow-md">
                     <a className="relative flex h-60 overflow-hidden" href="#">
-                        <img className="absolute top-0 right-0 h-full w-full object-cover" src={item.img} alt="product image" />
+                        <img to={`/product/${item.id}`} className="absolute top-0 right-0 h-full w-full object-cover" src={item.img} alt="product image" />
                         <div className="absolute -right-16 bottom-0 mr-2 mb-4 space-y-2 transition-all duration-300 group-hover:right-0">
                             <button onClick={() => addToWishList(item)} className="flex h-10 w-10 items-center justify-center bg-gray-900 text-white transition hover:bg-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

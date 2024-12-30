@@ -1,23 +1,26 @@
 import { signOut } from "firebase/auth";
 import { User, Search, ShoppingBag, LogOut } from "lucide-react";
 import PropTypes from "prop-types";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../Firebase/FirebaseConfig";
+import '.././style/search.css';
+import { useState } from "react";
 
 function NavLink({ href, children }) {
   return (
-    <a
-      href={href}
+    <Link
+      to={href}
       className="text-sm uppercase tracking-wider hover:text-gray-300 transition-colors"
     >
       {children}
-    </a>
+    </Link>
   );
 }
 
-function Navbar({ bgColor }) {
+function Navbar({ bgColor }) { 
   const navigate = useNavigate();
   const location = useLocation();
+  const [isSearch, setIsSearch] = useState(false);
 
   const handleButtonCart = () => {
     if (location.pathname === "/") {
@@ -54,19 +57,22 @@ function Navbar({ bgColor }) {
       <nav className="bg-opacity-0 text-white">
         <div className="container mx-auto px-4">
           <div className="h-20 flex p-3 items-center justify-between">
-            <a href="/home" className="text-4xl font-bold tracking-wider">
+            <Link to="/home" className="text-4xl font-bold tracking-wider">
               LUSTRE
-            </a>
+            </Link>
 
             <div className="hidden md:flex items-center space-x-8">
-              <NavLink href="/men">Men</NavLink>
-              <NavLink href="/women">Women</NavLink>
-              <NavLink href="/orders">Orders</NavLink>
-              <NavLink href="/archive">Wishlist</NavLink>
+              <Link
+                to='/cart'
+                className="text-sm uppercase tracking-wider hover:text-gray-300 transition-colors"
+              > Cart
+              </Link>
+              <NavLink to="/archive">Wishlist</NavLink>
             </div>
 
             <div className="flex items-center space-x-6">
-              <button className="hover:text-gray-300 transition-colors">
+              <input className={`bg-gray-500 bg-opacity-50 rounded-xl p-1 ${isSearch ? 'block' : 'hidden' } transition-all duration-250`} type="text" />
+              <button onClick={() => setIsSearch(!isSearch)} className="hover:text-gray-300 transition-colors">
                 <Search className="w-5 h-5" />
               </button>
               <button

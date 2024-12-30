@@ -17,7 +17,7 @@ const Start = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="mb-20">
           <div className="w-full pt-40 px-52">
             <img className="w-full h-[30vh] object-cover object-top transition-all duration-300 hover:object-center" src="./src/assets/banner.jpg" alt="" />
           </div>

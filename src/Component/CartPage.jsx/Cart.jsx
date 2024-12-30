@@ -26,13 +26,16 @@ const Cart = () => {
   console.log('Current Time:', getCurrentTime());
 
   const getCarts = async () => {
-    if (currentUser) {
-      const cartRef = collection(db, "users", currentUser, "cart");
-      const snapshot = await getDocs(cartRef);
-      const cartData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setAllCart(cartData);
-      console.log(allCart);
-      calculateSubtotal(cartData);
+    if (currentUser ) {
+      try {
+        const cartRef = collection(db, "users", currentUser , "cart");
+        const snapshot = await getDocs(cartRef);
+        const cartData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setAllCart(cartData);
+        calculateSubtotal(cartData);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
     }
   }
 
@@ -106,28 +109,30 @@ const Cart = () => {
     }
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setCurrentUser(user.uid);
       setEmail(user.email);
     })
-  },);
+  }, []);
 
   useEffect(() => {
-    getCarts();
-  }, []);
+    if (currentUser) {
+      getCarts();
+    }
+  }, [currentUser]);
 
   return (
     <>
       <Navbar />
-      <section className="h-screen bg-gray-100 py-12 sm:py-16 lg:py-20">
+      <section className=" p-20 bg-black py-12 sm:py-16 lg:py-20">
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center">
-            <h1 className="text-2xl font-semibold text-gray-900">Your Cart</h1>
+            <h1 className="text-2xl font-semibold text-white">Your Cart</h1>
           </div>
 
           <div className="mx-auto mt-8 max-w-2xl md:mt-12">
-            <div className="bg-white shadow">
+            <div className="bg-gray-300 shadow">
               <div className="px-4 py-6 sm:px-8 sm:py-10">
                 <div className="flow-root">
                   <ul className="-my-8">
